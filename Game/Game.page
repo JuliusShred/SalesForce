@@ -1,0 +1,25 @@
+<apex:page controller="GameController">
+<apex:pageBlock title="Specify the enemies">
+        <apex:form >
+            <apex:pageBlockSection columns="4">
+                  1st player's name <apex:inputText value="{!pl1.Name}"/>
+                  2st player's name <apex:inputText value="{!pl2.Name}"/>
+                  1st player's HP <apex:inputText value="{!pl1.HP}"/>
+                  2st player's HP <apex:inputText value="{!pl2.HP}"/>
+                  1st player's Min damage <apex:inputText value="{!pl1.minDMG }"/>
+                  2st player's Min damage <apex:inputText value="{!pl2.minDMG }"/>
+                  1st player'sMax damage <apex:inputText value="{!pl1.maxDMG }"/>
+                  2st player's Max damage <apex:inputText value="{!pl2.maxDMG }"/>      
+              <apex:commandButton action="{!fight}" value="Start!"  reRender="RefreshField" />
+            </apex:pageBlockSection>
+        </apex:form>
+</apex:pageBlock>
+<apex:pageBlock title="Game results">
+        <apex:form >
+            <apex:pageBlockSection id="RefreshField">
+                Winner: <apex:inputtext value="{!winner.Name}"/>
+                HP: <apex:inputtext value="{!winner.HP}"/>
+            </apex:pageBlockSection>
+        </apex:form>
+</apex:pageBlock>
+</apex:page>
