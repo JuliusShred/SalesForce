@@ -4,8 +4,7 @@
             <apex:pageBlockTable value="{!checkedAccs }" var="acc">  
                 <apex:column value="{!acc.name}"/>  
             </apex:pageBlockTable>  
-        </apex:pageBlock>
-         
+        </apex:pageBlock>  
         <apex:pageBlock title="listOfAccounts">  
             <apex:pageBlockTable value="{!wrappers}" var="wrap">  
                 <apex:column headerValue="Select">            
