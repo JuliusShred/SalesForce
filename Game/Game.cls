@@ -6,12 +6,11 @@
 public class Game 
 {
     private Unit winner;
-    
     /**
      * This method returns the type of hit/bock. The type depends of randomly ganerated number
      */
-    private String getBlockKickType(Integer typeOfBlock) {
-        
+    private String getBlockKickType(Integer typeOfBlock) 
+	{
 		String BlockKick;    
         
         if (typeOfBlock == 0)
