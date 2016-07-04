@@ -5,9 +5,9 @@ public class Game
 {
     private Unit__c winner;
     public List<String> gameLog {get; set;}
-    private Decimal Unit1_HP;
-    private Decimal Unit2_HP;
-    
+    private Unit__c hitter;
+    private Unit__c victim;
+
     public Game() 
     {
         winner = new Unit__c();
@@ -78,8 +78,6 @@ public class Game
         }    
         else 
         {
-            
-            
             gameLog.add(victim.Name + ' is blocking his ' + typeOfBlock + ', '
                        + hitter.Name + ' beats in ' +  typeOfKick + '.');    
         }
@@ -92,14 +90,16 @@ public class Game
     /**
     * This method determins which unit will hit next
     */
-    public Unit__c whoIsHitting (Unit__c Unit1, Unit__c Unit2)
+    public void setHitterVictim (Unit__c Unit1, Unit__c Unit2)
     {
         if ((Integer)Math.floor(Math.random() * 100) < 50)
         {
-            return Unit1;
+            hitter = Unit1;
+            victim = Unit2;
         } else
         {
-            return Unit2;
+            hitter = Unit2;
+            victim = Unit1;
         }
     }
     /**
@@ -109,43 +109,33 @@ public class Game
     {
         if (Unit1 != null && Unit2 !=null)
         {
-            Unit1_HP = Unit1.HP__c;
-            Unit2_HP = Unit2.HP__c;
-            while (true) 
+            Decimal Unit1_HP = Unit1.HP__c;
+            Decimal Unit2_HP = Unit2.HP__c;
+            hitter = new Unit__c();
+            victim = new Unit__c();
+            for (Integer i = 1; ; i++) 
             {
-                gameLog.add(Unit1.Name + ' HP = ' + Unit1_HP + ', ' + Unit2.Name + ' HP = ' + Unit2_HP + '.');
-                if (whoIsHitting(Unit1, Unit2) == Unit1)
+                gameLog.add('Round '+ i + ': ' + Unit1.Name + ' HP = ' + Unit1.HP__c + ', ' + Unit2.Name + ' HP = ' + Unit2.HP__c + '.');
+                setHitterVictim(Unit1, Unit2);
+                victim.HP__c -= Hit(hitter, victim);
+                if (hitter.Stamina__c <= 0)
                 {
-                    Unit2_HP -= Hit(Unit1, Unit2);
-                    if (Unit2.Stamina__c <= 0)
-                    {
-                        gameLog.add(Unit2.Name + ' has no more strength left.');
-                        Unit2.Stamina__c = 0;
-                        Unit2_HP = 0;
-                        break;
-                    }
-                    if (Unit2_HP <= 0) break;
+                    gameLog.add(hitter.Name + ' has no more strength left.');
+                    hitter.Stamina__c = 0;
+                    hitter.HP__c = 0;
+                    break;
                 }
-                else
-                {
-                    Unit1_HP -= Hit(Unit2, Unit1);
-                    if (Unit1.Stamina__c <= 0)
-                    {
-                        gameLog.add(Unit1.Name + ' has no more strength left.');
-                        Unit1.Stamina__c = 0;
-                        Unit1_HP = 0;
-                        break;
-                    }
-                    if (Unit1_HP <= 0) break;
-                }
+                if (victim.HP__c <= 0) break;
+
             }
-            winner = Unit1_HP > Unit2_HP ? Unit1 : Unit2;
+            winner = Unit1.HP__c > Unit2.HP__c ? Unit1 : Unit2;
+            Unit1.HP__c = Unit1_HP;
+            Unit2.HP__c = Unit2_HP;
             gameLog.add(winner.Name + ' has won!');
             return winner;
         } else
         {
             throw new GameException('Unit cannot be null');
-        }
-        
+        }        
     }
 }
