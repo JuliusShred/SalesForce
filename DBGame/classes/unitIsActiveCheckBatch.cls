@@ -19,6 +19,9 @@ global class unitIsActiveCheckBatch implements Database.Batchable<sObject>
        update updateUnitList;
    }
 
-   global void finish(Database.BatchableContext BC) {}
+   global void finish(Database.BatchableContext BC) 
+   {
+       System.scheduleBatch(new unitIsActiveCheckBatch(), 'Unit activity check batch', 360);
+   }
     
 }

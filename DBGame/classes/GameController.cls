@@ -14,7 +14,7 @@ public class GameController
     public String secondChosedUnit {get; set;}
     public Game game {get; set;}
 
-    public GameController  () 
+    public void GameInit () 
     {
         newUnit = new Unit__c();
         firstUnit = new Unit__c();
@@ -30,14 +30,14 @@ public class GameController
     
     private void getActiveUnits() 
     {
-        activeUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, Position_in_top__c, Percent_of_Victories__c 
+        activeUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
                        FROM Unit__c 
                        WHERE Active__c = true];
     }
     
     private void getAllUnits() 
     {
-        allUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, Position_in_top__c, Percent_of_Victories__c
+        allUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
                     FROM Unit__c];
     }
     
@@ -53,6 +53,7 @@ public class GameController
             if (unit.Deactivation_Time__c < DateTime.now().addDays(-1)) 
             {
                 unit.Active__c = true;
+                unit.Deactivation_Time__c = NULL;
                 unitsToUpdateList.add(unit);
             }
         }
@@ -64,13 +65,10 @@ public class GameController
  
     public PageReference fight() 
     {
-        //Unit__c winner = new Unit__c();
         winner = new Unit__c();
         Unit__c looser = new Unit__c();
         game = new Game();
         winner = game.fight(firstUnit, secondUnit);
-        //gameLog = game.gameLog;
-       //winner = winner == firstUnit ? firstUnit : secondUnit;
         if (winner == firstUnit)
         {
             winner = firstUnit;
@@ -86,7 +84,7 @@ public class GameController
             showFirstChosenUnit = false;           
         }
         showResult = true;
-        deactivateUnit(looser);
+        deactivateUnits(winner, looser);
         saveGameResult(winner,  looser);
         getAllUnits();
         getActiveUnits();
@@ -111,8 +109,13 @@ public class GameController
         update winner;
     }
     
-    private void deactivateUnit(Unit__c looser) 
+    private void deactivateUnits(Unit__c winner, Unit__c looser) 
     {
+        if (winner.Stamina__c == 0)
+        {
+            winner.Active__c= false;
+            update winner;
+        }
         looser.Active__c = false;
         looser.Deactivation_Time__c = DateTime.now();
         update looser;

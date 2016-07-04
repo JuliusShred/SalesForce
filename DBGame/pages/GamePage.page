@@ -1,4 +1,4 @@
-<apex:page controller="GameController">
+<apex:page controller="GameController" action="{!GameInit}">
     <apex:pageBlock title="Manage Units"  >
         <apex:form >
         <apex:pageBlock title="All Units" id="UnitsTable">
@@ -10,6 +10,7 @@
                     <apex:column value="{!u.HP__c}"/>
                     <apex:column value="{!u.minDMG__c}"/>
                     <apex:column value="{!u.maxDMG__c}"/>
+                	<apex:column value="{!u.Stamina__c}"/>
             		<apex:column value="{!u.Number_of_Victories__c}"/>
                 	<apex:column value="{!u.Percent_of_Victories__c}"/>
                     <apex:column value="{!u.Position_in_top__c}"/>
@@ -49,7 +50,7 @@
                                                 onChange="selectFirstUnitFromList()" onSelect="selectFirstUnitFromList()">
                                     <apex:selectOptions value="{!UnitSelectList}"/>
                                 </apex:selectList>
-                             </apex:pageBlockSection>
+                            </apex:pageBlockSection>
                     </apex:pageBlock>
                     <apex:pageBlockSection title="Chosen unit:" id="firstChosenUnit" rendered="{!showFirstChosenUnit}" columns="2">
                         <apex:outputField value="{!firstUnit.Name}" label="Name:"/>
