@@ -159,7 +159,7 @@ public class GameController
         return null;
     }
     
-	private Unit__c chooseUnit(Unit__c chosingUnit, String chosedUnit) 
+    private Unit__c chooseUnit(Unit__c chosingUnit, String chosedUnit) 
     {
         if (chosedUnit!='' && chosedUnit!='Select Unit' && chosedUnit!='Not available') 
         {
@@ -171,10 +171,6 @@ public class GameController
                 }
             }       
         } 
-        else 
-        {
-            chosingUnit = new Unit__c(name = '', HP__c = 10, minDMG__c = 0, maxDMG__c = 0);
-        }
         return chosingUnit;
     }
     
