@@ -18,13 +18,14 @@ global class staminaRecoveryBatch implements Database.Batchable<sObject>
            {
                item.Stamina__c = 100;
            }
+           updateUnitList.add(item);
        }
        update updateUnitList;
    }
 
    global void finish(Database.BatchableContext BC) 
    {
-       System.scheduleBatch(new unitIsActiveCheckBatch(), 'Unit stamina recovery batch', 60);
+
    }
 
 }

@@ -82,7 +82,8 @@
                     </apex:pageBlockSection>
                 </apex:outputPanel>
                 <apex:pageBlockSection id="start_game">
-                    <apex:commandButton action="{!fight}"  value="Start Game" rerender="Results, UnitsTable, firstUnit, secondUnit, start_game" rendered="{!(showFirstChosenUnit && showSecondChosenUnit)}"/>
+                    <apex:commandButton action="{!fight}"  value="Start Game" rerender="Results, UnitsTable, firstUnit, secondUnit, UnitSelectList, start_game" 
+                                                                                    rendered="{!(showFirstChosenUnit && showSecondChosenUnit)}"/>
                 </apex:pageBlockSection>
             </apex:pageBlockSection>
         </apex:form>

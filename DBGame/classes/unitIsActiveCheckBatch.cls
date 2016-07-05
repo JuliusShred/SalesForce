@@ -15,13 +15,14 @@ global class unitIsActiveCheckBatch implements Database.Batchable<sObject>
            {
                 item.Active__c = true;
            }
+           updateUnitList.add(item);
        }
        update updateUnitList;
    }
 
    global void finish(Database.BatchableContext BC) 
    {
-       System.scheduleBatch(new unitIsActiveCheckBatch(), 'Unit activity check batch', 360);
+       System.scheduleBatch(new unitIsActiveCheckBatch(), 'Unit activity check batch', 60);
    }
     
 }

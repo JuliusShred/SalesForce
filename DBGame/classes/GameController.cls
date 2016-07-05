@@ -26,6 +26,9 @@ public class GameController
         showSecondChosenUnit = false;
         showResult = false;
         showCreateUnit = false;
+        
+        //system.scheduleBatch(new staminaRecoveryBatchScheduled(), 'Game Stamina Batch', 1);
+
     }
     
     private void getActiveUnits() 
