@@ -26,9 +26,6 @@ public class GameController
         showSecondChosenUnit = false;
         showResult = false;
         showCreateUnit = false;
-        
-        //system.scheduleBatch(new staminaRecoveryBatchScheduled(), 'Game Stamina Batch', 1);
-
     }
     
     private void getActiveUnits() 
@@ -56,7 +53,6 @@ public class GameController
             if (unit.Deactivation_Time__c < DateTime.now().addDays(-1)) 
             {
                 unit.Active__c = true;
-                unit.Deactivation_Time__c = NULL;
                 unitsToUpdateList.add(unit);
             }
         }
@@ -214,7 +210,6 @@ public class GameController
         for (Unit__c unit: inActiveUnitsList) 
         {
             unit.Active__c = true;
-            unit.Deactivation_Time__c = null;
         }
         update inActiveUnitsList;
         getActiveUnits();
