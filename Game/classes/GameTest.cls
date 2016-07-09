@@ -6,8 +6,17 @@ public class GameTest {
     @isTest static void gameTest()
     {
         Unit__c winner = new Unit__c();
-        Unit__c firstUnit = new Unit__c(Name = 'first', HP__c = 200, minDMG__c = 10, maxDMG__c = 29, Stamina__c = 100);
-        Unit__c secondUnit = new Unit__c(Name = 'second', HP__c = 200, minDMG__c = 30, maxDMG__c = 49, Stamina__c = 100);
+        Unit__c firstUnit = new Unit__c(Name = 'first', 
+                                        HP__c = 200, 
+                                        minDMG__c = 10, 
+                                        maxDMG__c = 29, 
+                                        Stamina__c = 100);
+        
+        Unit__c secondUnit = new Unit__c(Name = 'second', 
+                                         HP__c = 200, 
+                                         minDMG__c = 30, 
+                                         maxDMG__c = 49, 
+                                         Stamina__c = 100);
         Game g = new Game();
         //testing the values that getBlockKickType() method have to return
         String  HeadType =  g.getBlockKickType(0);
@@ -120,11 +129,13 @@ public class GameTest {
         Test.setCurrentPage(pageRef);
         
         controller.GameInit();
-        List <Unit__c> activeUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
+        List <Unit__c> activeUnits = [SELECT Id, Name, HP__c, MinDMG__c, MaxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, 
+                                                                Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
                                       FROM Unit__c
                                       WHERE Active__c = true];
         
-        List <Unit__c> allUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
+        List <Unit__c> allUnits = [SELECT Id, Name, HP__c, MinDMG__c, MaxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, 
+                                                            Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
                                    FROM Unit__c];
         System.assert(allUnits.size() == controller.allUnits.size());
         System.assert(activeUnits.size() == controller.activeUnits.size());
@@ -132,7 +143,13 @@ public class GameTest {
         List<Unit__c> unitsToCheckList = [SELECT Active__c, Deactivation_Time__c, Stamina__c
                                           FROM Unit__c 
                                           WHERE Active__c = false];
-        Unit__c longTimeAgoDeactivatedUnit = new Unit__c(name = 'old',  HP__c = 100, minDMG__c = 12, maxDMG__c = 15, Stamina__c = 20, Deactivation_Time__c = DateTime.now().addDays(-2), Active__c = false);
+        Unit__c longTimeAgoDeactivatedUnit = new Unit__c(Name = 'old',  
+                                                         HP__c = 100,
+                                                         minDMG__c = 12, 
+                                                         maxDMG__c = 15, 
+                                                         Stamina__c = 20, 
+                                                         Deactivation_Time__c = DateTime.now().addDays(-2), 
+                                                         Active__c = false);
         insert longTimeAgoDeactivatedUnit;
         update longTimeAgoDeactivatedUnit;
         controller.checkUnitsActivity();
@@ -200,17 +217,30 @@ public class GameTest {
         System.assert(controller.newUnit == null);
            
         //testing the fight method
-        controller.firstUnit = new Unit__c(Name = 'first', HP__c = 2000, minDMG__c = 10, maxDMG__c = 29, Stamina__c = 1000, Number_Of_Victories__c = 0 , Number_of_Games__c = 0);
-        controller.secondUnit = new Unit__c(Name = 'second', HP__c = 200, minDMG__c = 30, maxDMG__c = 49, Stamina__c = 100, Number_Of_Victories__c = 0 , Number_of_Games__c = 0);
+        controller.firstUnit = new Unit__c(Name = 'first', 
+                                           HP__c = 2000,
+                                           minDMG__c = 10, 
+                                           maxDMG__c = 29, 
+                                           Stamina__c = 1000, 
+                                           Number_Of_Victories__c = 0, 
+                                           Number_of_Games__c = 0);
+
+        controller.secondUnit = new Unit__c(Name = 'second', 
+                                            HP__c = 200, 
+                                            minDMG__c = 30, 
+                                            maxDMG__c = 49, 
+                                            Stamina__c = 100, 
+                                            Number_Of_Victories__c = 0, 
+                                            Number_of_Games__c = 0);
 
         insert controller.firstUnit;
         insert controller.secondUnit;
         controller.fight();
         system.assertEquals(true, controller.winner == controller.firstUnit);
         controller.saveGameResult(controller.winner, controller.looser);
-	allUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, 
-			Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
-			FROM Unit__c];
+		allUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, 
+                            Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
+                    FROM Unit__c];
         controller.firstUnit = new Unit__c();
         controller.secondUnit = new Unit__c();
         controller.firstChosedUnit = controller.allUnits[0].ID;
@@ -223,7 +253,8 @@ public class GameTest {
         System.assert(controller.showSecondChosenUnit == true);
         //testing the list menu from the page    
         List<SelectOption> options;
-        controller.activeUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
+        controller.activeUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c,
+                                                            Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
                                  FROM Unit__c
                                  WHERE Active__c = true];
         options = controller.getUnitSelectList();
@@ -254,10 +285,9 @@ public class GameTest {
         Database.executeBatch(new gameBatch());
         Test.stopTest();
         
-        List<Unit__c> unitsList= [SELECT Id, Stamina__c, Active__c
-                               FROM Unit__c
-                               WHERE Active__c = true];
-
+        List<Unit__c> unitsList = [SELECT Id, Stamina__c, Active__c 
+                                   FROM Unit__c 
+                                   WHERE Active__c = true];
         System.assertEquals(5, unitsList.size());
         for(Unit__c i: unitsList)
         {
