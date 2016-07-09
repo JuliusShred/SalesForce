@@ -6,7 +6,7 @@ global class gameBatch implements Database.Batchable<sObject>
     global Database.QueryLocator start(Database.BatchableContext BC)
     {
         return Database.getQueryLocator([SELECT ID, HP__c, Active__c, Deactivation_Time__c, Stamina__c
-                                      FROM Unit__c]);
+										FROM Unit__c]);
     }
     global void execute(Database.BatchableContext BC, List<Unit__c> scope)
     {
