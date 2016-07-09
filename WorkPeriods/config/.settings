@@ -1,0 +1,19 @@
+{
+    "username": "igor@slushniy.com", 
+    "environment": "developer", 
+    "project_name": "WorkPeriods", 
+    "workspace": "D:/SF/HW", 
+    "org_url": "", 
+    "namespace": "", 
+    "id": "5XCVN7G21IQH1XEMZGYPGF4IAGVIR10K", 
+    "metadata_container": "1dc58000000MHyKAAW", 
+    "subscription": [
+        "ApexClass", 
+        "ApexComponent", 
+        "ApexPage", 
+        "ApexTrigger", 
+        "StaticResource", 
+        "CustomObject", 
+        "Profile"
+    ]
+}
