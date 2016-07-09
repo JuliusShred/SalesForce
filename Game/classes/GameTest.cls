@@ -11,7 +11,6 @@ public class GameTest {
                                         minDMG__c = 10, 
                                         maxDMG__c = 29, 
                                         Stamina__c = 100);
-        
         Unit__c secondUnit = new Unit__c(Name = 'second', 
                                          HP__c = 200, 
                                          minDMG__c = 30, 
@@ -232,7 +231,6 @@ public class GameTest {
                                             Stamina__c = 100, 
                                             Number_Of_Victories__c = 0, 
                                             Number_of_Games__c = 0);
-
         insert controller.firstUnit;
         insert controller.secondUnit;
         controller.fight();
@@ -240,7 +238,7 @@ public class GameTest {
         controller.saveGameResult(controller.winner, controller.looser);
 		allUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, 
                             Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
-                    FROM Unit__c];
+                        FROM Unit__c];
         controller.firstUnit = new Unit__c();
         controller.secondUnit = new Unit__c();
         controller.firstChosedUnit = controller.allUnits[0].ID;
