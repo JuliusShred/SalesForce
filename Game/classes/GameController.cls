@@ -38,16 +38,16 @@ public class GameController
     //used for getting the list of current active units
     private void getActiveUnits() 
     {
-        activeUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, 
-					   Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
+        activeUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c,
+		Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
                        FROM Unit__c 
                        WHERE Active__c = true];
     }
     //used for getting the list of all units
     private void getAllUnits() 
     {
-        allUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, 
-					Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
+        allUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c,
+		Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
                     FROM Unit__c];
     }
     //used for checking the list of deactivating units and determins which of them are able to return to the game
