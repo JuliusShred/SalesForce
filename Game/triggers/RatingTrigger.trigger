@@ -40,8 +40,8 @@ trigger RatingTrigger on Unit__c (before update)
     
         Integer PositionInTop = 0;
         /**
-        * i really needed to seperate this two things because i coundn't make them work for a long time
-        * i'm planning to deal with it a little bit later, it still works fine
+        * i really needed to seperate this two things because i coundn't make them work together for a long time
+        * i'm planning to work it out little bit later, 'cause now it still works ok
         */
         //this serves for determining the postiton in top
         if (unitsThatWon > 0)
