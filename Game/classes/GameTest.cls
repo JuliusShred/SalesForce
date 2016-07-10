@@ -37,7 +37,8 @@ public class GameTest {
         
         System.assertEquals(spentStaminaPointsValuesList.size(), 20);
         Integer counter = 0;
-        for(Decimal i: spentStaminaPointsValuesList){
+        for(Decimal i: spentStaminaPointsValuesList)
+        {
             System.assert(i == counter);
             counter++;
             System.assertNotEquals(null, i);
@@ -56,13 +57,15 @@ public class GameTest {
         System.assertEquals(firstUnitDamageValuesList.size(), 20);
         System.assertEquals(secondUnitDamageValuesList.size(), 20);
         
-        for(Integer i: firstUnitDamageValuesList){
+        for(Integer i: firstUnitDamageValuesList)
+        {
             System.assert(i >= 10 && i <= 29);
             System.assertNotEquals(0, i);
             System.assertNotEquals(null, i);
             System.debug(i);
         }
-        for(Integer i: secondUnitDamageValuesList){
+        for(Integer i: secondUnitDamageValuesList)
+        {
             System.assert(i >= 30 && i <= 49);
             System.assertNotEquals(0, i);
             System.assertNotEquals(null, i);
@@ -78,7 +81,8 @@ public class GameTest {
         
         System.assertEquals(winnerList.size(), 10);
         
-        for(Unit__c unit: winnerList){
+        for(Unit__c unit: winnerList)
+        {
             System.assert(unit == firstUnit || unit == secondUnit);
             System.debug(unit);
         }
@@ -95,12 +99,14 @@ public class GameTest {
         System.assertEquals(firstUnitHitValuesList.size(), 40);
         System.assertEquals(secondUnitHitValuesList.size(), 40);
         
-        for(Integer i: firstUnitHitValuesList){
+        for(Integer i: firstUnitHitValuesList)
+        {
             System.assert((i >= 10 && i <= 29) || i == 0);
             System.assertNotEquals(null, i);
             System.debug(i);
         }
-        for(Integer i: secondUnitHitValuesList){
+        for(Integer i: secondUnitHitValuesList)
+        {
             System.assert((i >= 30 && i <= 49) || i == 0);
             System.assertNotEquals(null, i);
             System.debug(i);
@@ -223,7 +229,6 @@ public class GameTest {
                                            Stamina__c = 1000, 
                                            Number_Of_Victories__c = 0, 
                                            Number_of_Games__c = 0);
-
         controller.secondUnit = new Unit__c(Name = 'second', 
                                             HP__c = 200, 
                                             minDMG__c = 30, 
