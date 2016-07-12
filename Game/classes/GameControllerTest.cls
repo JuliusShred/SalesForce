@@ -53,9 +53,9 @@ public class GameControllerTest
     */
     static testMethod void gameInitializationTest() 
     {
-		List <Unit__c> activeUnits  = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Active__c
-                                       FROM Unit__c
-                                       WHERE Active__c = true];
+        List <Unit__c> activeUnits  = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Active__c
+                                        FROM Unit__c
+                                        WHERE Active__c = true];
         List <Unit__c> inActiveUnits  = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Active__c
                                          FROM Unit__c
                                          WHERE Active__c = false];
@@ -132,7 +132,7 @@ public class GameControllerTest
             GameController gameCtrl = new GameController();
             gameCtrl.firstUnit = firstUnit;
             gameCtrl.fight();
-		Test.stopTest();
+        Test.stopTest();
         
         System.assertEquals(true, ApexPages.getMessages().get(0).getDetail().contains('Unit can\'t be NULL.'), 
                             											'Error: Apex Message was not added.');
@@ -147,28 +147,28 @@ public class GameControllerTest
         firstUnit.HP__c = 9999;
         
         Test.startTest();
-            GameController gameCtrl = new GameController();
+        GameController gameCtrl = new GameController();
             gameCtrl.firstUnit = firstUnit;
             gameCtrl.secondUnit = secondUnit;
-        	gameCtrl.fight();
-        	system.assert(gameCtrl.winner == firstUnit && gameCtrl.looser == secondUnit, 'Error: wrong fight results');
-        	gameCtrl.firstUnit = secondUnit;
-            gameCtrl.secondUnit = firstUnit;
-        	gameCtrl.fight();
+            gameCtrl.fight();
             system.assert(gameCtrl.winner == firstUnit && gameCtrl.looser == secondUnit, 'Error: wrong fight results');
-		Test.stopTest();
+            gameCtrl.firstUnit = secondUnit;
+            gameCtrl.secondUnit = firstUnit;
+            gameCtrl.fight();
+            system.assert(gameCtrl.winner == firstUnit && gameCtrl.looser == secondUnit, 'Error: wrong fight results');
+        Test.stopTest();
     }
     //testing the deactivation of units
     static testMethod void deactivateUnitsTest() 
     {
         Unit__c firstUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Deactivation_Time__c, Active__c FROM Unit__c][0];
         Unit__c secondUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Deactivation_Time__c, Active__c FROM Unit__c][1];
-		firstUnit.Stamina__c = 0;
+        firstUnit.Stamina__c = 0;
         
         Test.startTest();
             GameController gameCtrl = new GameController();
             gameCtrl.deactivateUnits(firstUnit, secondUnit);
-		Test.stopTest();
+        Test.stopTest();
         
         firstUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Deactivation_Time__c, Active__c FROM Unit__c][0];
         secondUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Deactivation_Time__c, Active__c FROM Unit__c][1];
@@ -187,7 +187,7 @@ public class GameControllerTest
             GameController gameCtrl = new GameController();
             gameCtrl.game = new Game();
             gameCtrl.saveGameResult(firstUnit, secondUnit);
-		Test.stopTest();
+        Test.stopTest();
         
         firstUnit = [SELECT Id, Name, Number_of_Victories__c, Number_of_Games__c FROM Unit__c][0];
         secondUnit = [SELECT Id, Name, Number_of_Victories__c, Number_of_Games__c FROM Unit__c][1];
@@ -240,14 +240,14 @@ public class GameControllerTest
         
         System.assertEquals(0, testList.size(), 'Error: Invalid List size, perhaps unit hasn\'t been deleted');     
     } 
-    
+
     static testMethod void save_updateUnitNULLTest() 
     {
         Test.startTest();
             GameController gameCtrl = new GameController(); 	
             gameCtrl.saveUnit(); 
         	gameCtrl.updateUnit();
-		Test.stopTest();
+        Test.stopTest();
         
         System.assertEquals(true, ApexPages.getMessages().get(0).getDetail().contains('Unit can\'t be NULL.'), 'Error: Apex Message was not added.');
         System.assertEquals(NULL, gameCtrl.newUnit, 'Error: Unit should be NULL');     
@@ -257,10 +257,10 @@ public class GameControllerTest
     {
         Test.startTest();
             GameController gameCtrl = new GameController();
-        	gameCtrl.createEditUnit();
-        	gameCtrl.saveUnit();
-            gameCtrl.updateUnit();     
-		Test.stopTest();
+            gameCtrl.createEditUnit();
+            gameCtrl.saveUnit();
+            gameCtrl.updateUnit();
+        Test.stopTest();
         
         System.assertEquals(true, ApexPages.getMessages().get(0).getDetail().contains('Make sure that you have entered the proper values.'), 'Error: Apex Message was not added.');
         System.assertNotEquals(NULL, gameCtrl.newUnit, 'Error: Unit can\'t be NULL');     
@@ -273,11 +273,11 @@ public class GameControllerTest
         
         Test.startTest();
             GameController gameCtrl = new GameController();
-        	gameCtrl.createEditUnit();
-        	gameCtrl.newUnit = testUnit;
+            gameCtrl.createEditUnit();
+            gameCtrl.newUnit = testUnit;
             gameCtrl.saveUnit();
-        	gameCtrl.updateUnit();
-		Test.stopTest();
+            gameCtrl.updateUnit();
+        Test.stopTest();
 
         System.assertEquals(true, ApexPages.getMessages().get(0).getDetail().contains('Minimum Damage cannot be less then Maximum Damage.'), 'Error: Apex Message was not added.');
         System.assertNotEquals(NULL, gameCtrl.newUnit, 'Error: Unit can\'t be NULL');     
@@ -294,13 +294,13 @@ public class GameControllerTest
         Unit__c testUnitToUpdate = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Stamina__c FROM Unit__c][0];
 
         Test.startTest();
-            GameController gameCtrl = new GameController();
-        	gameCtrl.createEditUnit();
-        	gameCtrl.newUnit = testUnitToSave;
-            gameCtrl.saveUnit();    
-        	gameCtrl.newUnit = testUnitToUpdate;
+        GameController gameCtrl = new GameController();
+            gameCtrl.createEditUnit();
+            gameCtrl.newUnit = testUnitToSave;
+            gameCtrl.saveUnit();
+            gameCtrl.newUnit = testUnitToUpdate;
             gameCtrl.updateUnit();
-		Test.stopTest();
+        Test.stopTest();
         
         Unit__c testUnitToSaveNew = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Stamina__c FROM Unit__c WHERE ID = :testUnitToSave.ID];
         Unit__c testUnitToUpdateNew = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Stamina__c FROM Unit__c WHERE ID = :testUnitToUpdate.ID];
@@ -313,9 +313,9 @@ public class GameControllerTest
     {
         Test.startTest();
             GameController gameCtrl = new GameController();
-        	gameCtrl.createEditUnit();
-        	gameCtrl.closeCreationEditing();
-		Test.stopTest();
+            gameCtrl.createEditUnit();
+            gameCtrl.closeCreationEditing();
+        Test.stopTest();
         
         System.assertEquals(NULL, gameCtrl.newUnit, 'Error: Unit should be NULL');     
     }
