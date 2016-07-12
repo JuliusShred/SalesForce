@@ -65,7 +65,7 @@ public class GameControllerTest
 
         Test.startTest();
             GameController gameCtrl = new GameController();
-        gameCtrl.gameInitialization();
+            gameCtrl.gameInitialization();
         Test.stopTest();
         
         inActiveUnits  = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Active__c
