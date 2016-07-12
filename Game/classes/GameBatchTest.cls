@@ -33,7 +33,7 @@ public class GameBatchTest
         for(Unit__c i: unitsList)
         {
             System.assert(i.Stamina__c >= 10);
-			System.assertEquals(true, i.Active__c, 'Error: Unit must be active.');
+            System.assertEquals(true, i.Active__c, 'Error: Unit must be active.');
         }
     }    
 }

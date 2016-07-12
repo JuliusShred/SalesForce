@@ -62,11 +62,11 @@ public class GameControllerTest
         List <Unit__c> allUnits  = new List<Unit__c>();
         allUnits.addAll(activeUnits);
         allUnits.addAll(inActiveUnits);
- 
-		Test.startTest();
+
+        Test.startTest();
             GameController gameCtrl = new GameController();
-            gameCtrl.gameInitialization();
-		Test.stopTest();
+        gameCtrl.gameInitialization();
+        Test.stopTest();
         
         inActiveUnits  = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Active__c
                           FROM Unit__c
@@ -79,10 +79,10 @@ public class GameControllerTest
     //testing the activation of all units
     static testMethod void activateAllUnitsTest() 
     {
-		Test.startTest();
+        Test.startTest();
             GameController gameCtrl = new GameController();
             gameCtrl.activateAllUnits();
-		Test.stopTest();
+        Test.stopTest();
         
         system.assertEquals(gameCtrl.allUnits.size(), gameCtrl.activeUnits.size(), 'Error: wrong list size');
     }
@@ -97,7 +97,7 @@ public class GameControllerTest
         System.assertEquals(gameCtrl.activeUnits.size() + 1, options.size(), 'Error: options size and activeUnits not match');
         
         gameCtrl.activeUnits.clear();
-		gameCtrl.getUnitSelectList();
+        gameCtrl.getUnitSelectList();
         options = gameCtrl.getUnitSelectList();
         
         System.assertEquals(1, options.size(), 'Error: options size is not 1');     
@@ -113,11 +113,11 @@ public class GameControllerTest
             GameController gameCtrl = new GameController();
             gameCtrl.gameInitialization();
             gameCtrl.firstUnit = activeUnits[0];
-        	gameCtrl.secondUnit = activeUnits[1];
+            gameCtrl.secondUnit = activeUnits[1];
             gameCtrl.firstChosedUnit = activeUnits[1].ID;
             gameCtrl.secondChosedUnit = activeUnits[2].ID;
             gameCtrl.chooseFirstUnit();
-        	gameCtrl.chooseSecondUnit();
+            gameCtrl.chooseSecondUnit();
         Test.stopTest();
         
         System.assertEquals(gameCtrl.firstUnit.ID, activeUnits[1].ID, 'Error: IDs doesn\'t match');     
@@ -135,7 +135,7 @@ public class GameControllerTest
         Test.stopTest();
         
         System.assertEquals(true, ApexPages.getMessages().get(0).getDetail().contains('Unit can\'t be NULL.'), 
-                            											'Error: Apex Message was not added.');
+                            						'Error: Apex Message was not added.');
         System.assertEquals(NULL, gameCtrl.winner, 'Error: winner should be NULL');
         System.assertEquals(NULL, gameCtrl.looser, 'Error: looser should be NULL');       
     }
@@ -245,8 +245,8 @@ public class GameControllerTest
     {
         Test.startTest();
             GameController gameCtrl = new GameController(); 	
-            gameCtrl.saveUnit(); 
-        	gameCtrl.updateUnit();
+            gameCtrl.saveUnit();
+            gameCtrl.updateUnit();
         Test.stopTest();
         
         System.assertEquals(true, ApexPages.getMessages().get(0).getDetail().contains('Unit can\'t be NULL.'), 'Error: Apex Message was not added.');
@@ -316,7 +316,7 @@ public class GameControllerTest
             gameCtrl.createEditUnit();
             gameCtrl.closeCreationEditing();
         Test.stopTest();
-        
+
         System.assertEquals(NULL, gameCtrl.newUnit, 'Error: Unit should be NULL');     
     }
 
