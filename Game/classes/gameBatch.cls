@@ -1,12 +1,12 @@
 /**
 * This is Batch that checks if it's time for activating the units and make the recovery of units' stamina
 */
-global class gameBatch implements Database.Batchable<sObject>
+global class GameBatch implements Database.Batchable<sObject>
 {
     global Database.QueryLocator start(Database.BatchableContext BC)
     {
         return Database.getQueryLocator([SELECT ID, HP__c, Active__c, Deactivation_Time__c, Stamina__c
-										FROM Unit__c]);
+                                      FROM Unit__c]);
     }
     global void execute(Database.BatchableContext BC, List<Unit__c> scope)
     {

@@ -38,7 +38,7 @@ public class Game
         return BlockKick;
     }
     /**
-    * This method serves for decreasing the unit's stamina during the fight
+    * This method will server for decreasing the unit's stamina during the fight
     * it depends on the strength of the hit
     */
     public Decimal spentStaminaPoints (Integer damage)
@@ -52,10 +52,7 @@ public class Game
     {
         return (Integer)(Math.floor(Math.random() * (unit.maxDMG__c - unit.minDMG__c + 1) + unit.minDMG__c));
     }
-	/**
-    * Hit() method determines what damage will be brought to the unit's health
-    */
-    public Integer Hit(Unit__c hitter, Unit__c victim) 
+    public Integer hit(Unit__c hitter, Unit__c victim) 
     {
         Integer damage = 0;
         if (hitter.Stamina__c > 0)
@@ -69,7 +66,7 @@ public class Game
             typeOfKick = getBlockKickType((Integer)Math.floor(Math.random() * 4));
             /**
             * calculating the damage that based on unit's maxDMG and minDMX characteristics
-            * and assigning the value of spent stamina points which unit will lost in any case
+            * assigning the to the spentStaminaPointsm which unit will lost in any case
             */
             spentStaminaPoints = spentStaminaPoints(damage = generateDamage(hitter));
             /**
@@ -105,7 +102,7 @@ public class Game
     /**
     * This method determins which unit will hit next
     */
-    public void setHitterVictim (Unit__c Unit1, Unit__c Unit2)
+    private void setHitterVictim (Unit__c Unit1, Unit__c Unit2)
     {
         if ((Integer)Math.floor(Math.random() * 100) < 50)
         {
@@ -118,7 +115,7 @@ public class Game
         }
     }
     /**
-    * The Fight() method determins the winner
+    * The main method which determins the winner
     */
     public Unit__c Fight (Unit__c Unit1, Unit__c Unit2) 
     {

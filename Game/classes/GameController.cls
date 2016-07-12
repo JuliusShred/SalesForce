@@ -21,13 +21,13 @@ public class GameController
     public Game game {get; set;}
     
     //initializing the data
-    public void GameInit () 
+    public void gameInitialization () 
     {
         firstUnit = new Unit__c();
         secondUnit = new Unit__c();
+        checkUnitsActivity();
         getActiveUnits();
         getAllUnits();
-        checkUnitsActivity();
         showFirstChosenUnit = false;
         showSecondChosenUnit = false;
         showResult = false;
@@ -38,16 +38,14 @@ public class GameController
     //used for getting the list of current active units
     private void getActiveUnits() 
     {
-        activeUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c,
-		       Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
+        activeUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
                        FROM Unit__c 
                        WHERE Active__c = true];
     }
     //used for getting the list of all units
     private void getAllUnits() 
     {
-        allUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c,
-		    Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
+        allUnits = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Number_of_victories__c, Number_of_Games__c, Position_in_top__c, Percent_of_Victories__c, Stamina__c
                     FROM Unit__c];
     }
     //used for checking the list of deactivating units and determins which of them are able to return to the game
@@ -73,34 +71,19 @@ public class GameController
             update unitsToUpdateList;
         }
     } 
-    
-    //we use this method to get the unit that we need when selecting it in the select menu
-    private Unit__c chooseUnit(Unit__c chosingUnit, String chosedUnit) 
+    //this is used when we want to activate all users
+    public PageReference activateAllUnits ()
     {
-        if (chosedUnit!='' && chosedUnit!='Select Unit' && chosedUnit!='Not available') 
+        List<Unit__c> inActiveUnitsList = [SELECT  Active__c, Deactivation_Time__c
+                                           FROM Unit__c];
+        for (Unit__c unit: inActiveUnitsList) 
         {
-            for (Unit__c unit: activeUnits) 
-            {
-                if (unit.Id.equals(chosedUnit)) 
-                {
-                    chosingUnit = unit;
-                }
-            }       
-        } 
-        return chosingUnit;
-    }
-    //methods below serve for calling the chooseUnit method to attach the proper values to both of our units
-    public PageReference chooseFirstUnit() 
-    {
-        firstUnit = chooseUnit(firstUnit, firstChosedUnit);
-        showFirstChosenUnit = true;
-        return null;
-    }
-    
-    public PageReference chooseSecondUnit() 
-    {
-        secondUnit = chooseUnit(secondUnit, secondChosedUnit);
-        showSecondChosenUnit = true;
+            unit.Active__c = true;
+            unit.Stamina__c = 100;
+        }
+        update inActiveUnitsList;
+        getActiveUnits();
+        getAllUnits();
         return null;
     }
     // this snippet does the generation of options in the menu so we can select the untis from it
@@ -133,134 +116,82 @@ public class GameController
         }
         return options;
     }
-    //this is used when we want to activate all users
-    public PageReference activateAllUnits ()
+    //we use this method to get the unit that we need when selecting it in the select menu
+    private Unit__c chooseUnit(Unit__c chosingUnit, String chosedUnit) 
     {
-        List<Unit__c> inActiveUnitsList = [SELECT  Active__c, Deactivation_Time__c
-                                           FROM Unit__c];
-        for (Unit__c unit: inActiveUnitsList) 
+        if (chosedUnit!='' && chosedUnit!='Select Unit' && chosedUnit!='Not available') 
         {
-            unit.Active__c = true;
-            unit.Stamina__c = 100;
-        }
-        update inActiveUnitsList;
-        getActiveUnits();
-        getAllUnits();
-        return null;
-    }  
-    //we need this method to show and hide panel for creating/editing the units when we need to
-    public PageReference createEditUnit ()
-    {
-        newUnit = new Unit__c();
-        showCreateEditUnit = true;
-        isCreating = true;
-        isUpdating = false;
-        return null;
-    }
-    // this one serves for saving new unit to the DB
-    public PageReference saveUnit ()
-    {
-        if (newUnit.name != '' && newUnit.HP__c > 0 && newUnit.minDMG__c > 0 && newUnit.maxDMG__c > 0 && newUnit.Stamina__c > 0)
-        {
-            if (newUnit.minDMG__c <= newUnit.maxDMG__c)
+            for (Unit__c unit: activeUnits) 
             {
-                insert newUnit;
-                newUnit = new Unit__c();
-            } 
-            else
-            {
-                ApexPages.addMessages(new GameException('Minimum Damage cannot be less then Maximum Damage'));
-            }
+                if (unit.Id.equals(chosedUnit)) 
+                {
+                    chosingUnit = unit;
+                }
+            }       
         } 
-        else 
-        {
-            ApexPages.addMessages(new GameException('Make sure that you have entered the proper values.'));
-        }
-        
-        getAllUnits();
-        getActiveUnits();
-        return null;
+        return chosingUnit;
     }
-    //provides the editing by taking the id parameter from the VF page
-    public PageReference editUnit ()
+    //methods below serve for calling the chooseUnit method to attach the proper values to both of our units
+    public PageReference chooseFirstUnit() 
     {
-        String unitID = ApexPages.currentPage().getParameters().get('unitID');
-        List <Unit__c> unitsToUpdate = [SELECT Name, HP__c, minDMG__c, maxDMG__c, Active__c, Stamina__c 
-                                        FROM Unit__c 
-                                        WHERE ID = :unitID];
-        newUnit = unitsToUpdate[0];
-        showCreateEditUnit = true;
-        isUpdating = true;
-        isCreating = false;
+        firstUnit = chooseUnit(firstUnit, firstChosedUnit);
+        showFirstChosenUnit = true;
         return null;
     }
-    //updating the unit that we've changed 
-    public PageReference updateUnit ()
-    { 
-        if (newUnit.name != '' && newUnit.HP__c > 0 && newUnit.minDMG__c > 0 && newUnit.maxDMG__c > 0 && newUnit.Stamina__c > 0)
-        {
-            if (newUnit.minDMG__c <= newUnit.maxDMG__c)
-            {
-                update newUnit;
-                newUnit = new Unit__c();
-            } 
-            else
-            {
-                ApexPages.addMessages(new GameException('Minimum Damage cannot be less then Maximum Damage'));
-            }
-        } 
-        else 
-        {
-            ApexPages.addMessages(new GameException('Make sure that you have entered the proper values.'));
-        }
-
-        getAllUnits();
-        getActiveUnits();
-        return null;
-    }
-    //if we changed our mind we can cancel the editing ot creation of unit
-    public PageReference closeCreationEditing ()
+    
+    public PageReference chooseSecondUnit() 
     {
-        newUnit = null;
-        showCreateEditUnit = false;
+        secondUnit = chooseUnit(secondUnit, secondChosedUnit);
+        showSecondChosenUnit = true;
         return null;
-    }
-    //delets the record from the database by taking the id parameter from the VF page
-    public PageReference deleteUnit ()
-    {
-        String unitID = ApexPages.currentPage().getParameters().get('unitID');
-        Unit__c unitToDelete =  new Unit__c(ID = unitID);
-        delete unitToDelete;
-        getAllUnits();
-        return null;
-    }
+    }    
     //this method calls the logic of the game and assings the winner anguser values to the appropriate fields
     public PageReference fight() 
     {
-        winner = new Unit__c();
-        looser = new Unit__c();
-        game = new Game();
-        winner = game.fight(firstUnit, secondUnit);
-        if (winner == firstUnit)
+        if (firstUnit != NULL && secondUnit != NULL)
         {
-            winner = firstUnit;
-            looser = secondUnit;
-            secondUnit = null;
-            showSecondChosenUnit = false;
+            winner = new Unit__c();
+            looser = new Unit__c();
+            game = new Game();
+            winner = game.fight(firstUnit, secondUnit);
+            if (winner == firstUnit)
+            {
+                winner = firstUnit;
+                looser = secondUnit;
+                secondUnit = null;
+                showSecondChosenUnit = false;
+            }
+            else
+            {
+                winner = secondUnit;
+                looser = firstUnit;
+                firstUnit = null;
+                showFirstChosenUnit = false;           
+            }
+            showResult = true;
+            deactivateUnits(winner, looser);
+            saveGameResult(winner,  looser);
+            getAllUnits();
+            getActiveUnits();
         }
         else
         {
-            winner = secondUnit;
-            looser = firstUnit;
-            firstUnit = null;
-            showFirstChosenUnit = false;           
+             ApexPages.addMessages(new GameException('Unit can\'t be NULL.'));
         }
-        showResult = true;
-        deactivateUnits(winner, looser);
-        saveGameResult(winner,  looser);
-        getAllUnits();
-        getActiveUnits();
+        
         return null;
+    }
+    //this one serves for deactivating the loosers and unitsthat have lost all their stamina
+    public void deactivateUnits(Unit__c winner, Unit__c looser) 
+    {
+        if (winner.Stamina__c == 0)
+        {
+            winner.Active__c = false;
+            update winner;
+        }
+        looser.Active__c = false;
+        looser.Deactivation_Time__c = DateTime.now();
+        update looser;
     }
     //this method saves the results of the game to the Fight sObject 
     public void saveGameResult(Unit__c winner, Unit__c looser) 
@@ -284,17 +215,105 @@ public class GameController
         update winner;
         update looser;
     }
-    //this one serves for deactivating the loosers and unitsthat have lost all their stamina
-    private void deactivateUnits(Unit__c winner, Unit__c looser) 
+    //delets the record from the database by taking the id parameter from the VF page
+    public PageReference deleteUnit ()
     {
-        if (winner.Stamina__c == 0)
-        {
-            winner.Active__c = false;
-            update winner;
-        }
-        looser.Active__c = false;
-        looser.Deactivation_Time__c = DateTime.now();
-        update looser;
+        String unitID = ApexPages.currentPage().getParameters().get('unitID');
+        Unit__c unitToDelete =  new Unit__c(ID = unitID);
+        delete unitToDelete;
+        getAllUnits();
+        return null;
     }
-    
+    //we need this method to show and hide panel for creating/editing the units when we need to
+    public PageReference createEditUnit ()
+    {
+        newUnit = new Unit__c();
+        showCreateEditUnit = true;
+        isCreating = true;
+        isUpdating = false;
+        return null;
+    }
+    // this one serves for saving new unit to the DB
+    public PageReference saveUnit ()
+    {
+        if(newUnit != NULL)
+        {
+            if (newUnit.name != '' && newUnit.HP__c > 0 && newUnit.minDMG__c > 0 && newUnit.maxDMG__c > 0 && newUnit.Stamina__c > 0)
+            {
+                if (newUnit.minDMG__c <= newUnit.maxDMG__c)
+                {
+                    insert newUnit;
+                    newUnit = new Unit__c();
+                } 
+                else
+                {
+                    ApexPages.addMessages(new GameException('Minimum Damage cannot be less then Maximum Damage.'));
+                }
+            } 
+            else 
+            {
+                ApexPages.addMessages(new GameException('Make sure that you have entered the proper values.'));
+            }
+        }
+        else
+        {
+            ApexPages.addMessages(new GameException('New Unit can\'t be NULL.'));
+        }
+        
+        getAllUnits();
+        getActiveUnits();
+        return null;
+    }
+    //provides the editing by taking the id parameter from the VF page
+    public PageReference editUnit ()
+    {
+        String unitID = ApexPages.currentPage().getParameters().get('unitID');
+        List <Unit__c> unitsToUpdate = [SELECT Name, HP__c, minDMG__c, maxDMG__c, Active__c, Stamina__c 
+                                        FROM Unit__c 
+                                        WHERE ID = :unitID];
+        newUnit = unitsToUpdate[0];
+        showCreateEditUnit = true;
+        isUpdating = true;
+        isCreating = false;
+        return null;
+    }
+    //updating the unit that we've changed 
+    public PageReference updateUnit ()
+    { 
+        if(newUnit != NULL)
+        {
+            if (newUnit.name != '' && newUnit.HP__c > 0 && newUnit.minDMG__c > 0 && newUnit.maxDMG__c > 0 && newUnit.Stamina__c > 0)
+            {
+                if (newUnit.minDMG__c <= newUnit.maxDMG__c)
+                {
+                    update newUnit;
+                    newUnit = new Unit__c();
+                } 
+                else
+                {
+                    ApexPages.addMessages(new GameException('Minimum Damage cannot be less then Maximum Damage.'));
+                }
+            } 
+            else 
+            {
+                ApexPages.addMessages(new GameException('Make sure that you have entered the proper values.'));
+            }
+        }
+        else
+        {
+            ApexPages.addMessages(new GameException('Unit can\'t be NULL.'));
+        }
+
+        getAllUnits();
+        getActiveUnits();
+        return null;
+    }
+    //if we changed our mind we can cancel the editing ot creation of unit
+    public PageReference closeCreationEditing ()
+    {
+        newUnit = null;
+        showCreateEditUnit = false;
+        return null;
+    }
+
 }
