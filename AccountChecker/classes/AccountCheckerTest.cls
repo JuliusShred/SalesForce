@@ -61,7 +61,7 @@ public class AccountCheckerTest
         	AccountCheckerController accCheckerCtrl = new AccountCheckerController();
         	for (Integer i = 0; i < accCheckerCtrl.accountsList.size(); i++)
                 {
-                accCheckerCtrl.accountsList[i].isSelected = true;
+                    accCheckerCtrl.accountsList[i].isSelected = true;
                 }
         	accCheckerCtrl.getCheckedRecords();
         Test.stopTest();
