@@ -10,7 +10,7 @@ public class AccountCheckerController
     {  
         accountsList = getData();  
     }  
-   	//getCheckedRecords() fills the checkedAccs list with accounts that we've selected on VF page 
+    //getCheckedRecords() fills the checkedAccs list with accounts that we've selected on VF page 
     public void getCheckedRecords()
     {  
         checkedAccs = new List<Account>();  
@@ -23,7 +23,7 @@ public class AccountCheckerController
         }  
         accountsList = getData(); 
     }  
-   	//this method gets the data from the accounts and fills the accountsList with unselected accounts
+    //this method gets the data from the accounts and fills the accountsList with unselected accounts
     public List<AccountWrapper> getData()
     {  
         List<Account> accList = [SELECT Name,Id,Phone, Description FROM Account];        
@@ -35,9 +35,9 @@ public class AccountCheckerController
         return accountsList;  
     }  
     /**
-	* AccountWrapper inner class serves for wrapping the accounts
-	* it assigns the isSelected value to account providing the selection from the controller 
-	*/
+    * AccountWrapper inner class serves for wrapping the accounts
+    * it assigns the isSelected value to account providing the selection from the controller 
+    */
     public class AccountWrapper
     {  
         public boolean isSelected {get; set;}  
