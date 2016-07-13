@@ -6,13 +6,13 @@
             </apex:pageBlockTable>  
         </apex:pageBlock>
         <apex:pageBlock title="list Of Accounts" id="lAccs">  
-            <apex:pageBlockTable value="{!accWrapper}" var="acc">  
+            <apex:pageBlockTable value="{!accountsList}" var="acc">  
                 <apex:column headerValue="Select">            
                     <apex:inputCheckbox value="{!acc.isSelected}"/>  
                 </apex:column>  
                 <apex:column value="{!acc.myAccount.name}"/>  
             </apex:pageBlockTable>     
-                <apex:commandButton value="Check" action="{!checkedRecords}" rerender="chAccs"/>  
+                <apex:commandButton value="Check" action="{!getCheckedRecords}" rerender="chAccs"/>  
         </apex:pageBlock>  
     </apex:form>  
 </apex:page>
