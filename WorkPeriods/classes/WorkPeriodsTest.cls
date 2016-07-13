@@ -18,20 +18,18 @@ public class WorkPeriodsTest
         companies.add(apple);
         insert companies;
         
-        Order__c microsoftOrder = new Order__c(	Name = 'microsoftOrder', 
-        										Account__c = microsoft.ID);
-        Order__c appleOrder = new Order__c(	Name = 'appleOrder', 
-        									Account__c = apple.ID);
+        Order__c microsoftOrder = new Order__c(Name = 'microsoftOrder', Account__c = microsoft.ID);
+        Order__c appleOrder = new Order__c(Name = 'appleOrder', Account__c = apple.ID);
         orders.add(microsoftOrder);
         orders.add(appleOrder);
         insert orders;
         
-        Rate__c normalRate = new Rate__c(	Name = 'normalRate', 
-        									Customer_rate__c = 400, 
-        									Employer_rate__c = 300);
+        Rate__c normalRate = new Rate__c(Name = 'normalRate', 
+        								Customer_rate__c = 400, 
+        								Employer_rate__c = 300);
         Rate__c halfTimeRate = new Rate__c(	Name = 'halfTimeRate', 
-        									Customer_rate__c = 200, 
-        									Employer_rate__c = 100);
+                                        Customer_rate__c = 200,
+                                        Employer_rate__c = 100);
         rates.add(normalRate);
         rates.add(halfTimeRate);
         insert rates;
