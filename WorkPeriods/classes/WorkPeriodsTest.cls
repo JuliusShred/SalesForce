@@ -5,7 +5,7 @@
 public class WorkPeriodsTest 
 {
 	//creating data
-	private static testMethod void setData() 
+	private static testMethod void setData()
     {
         List<Account> companies = new List<Account>();
         List<Order__c> orders = new List<Order__c>();
