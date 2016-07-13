@@ -24,9 +24,9 @@ public class WorkPeriodsTest
         orders.add(appleOrder);
         insert orders;
         
-        Rate__c normalRate = new Rate__c(Name = 'normalRate', 
-        								Customer_rate__c = 400, 
-        								Employer_rate__c = 300);
+        Rate__c normalRate = new Rate__c(Name = 'normalRate',
+                                        Customer_rate__c = 400,
+                                        Employer_rate__c = 300);
         Rate__c halfTimeRate = new Rate__c(Name = 'halfTimeRate', 
                                         Customer_rate__c = 200,
                                         Employer_rate__c = 100);
