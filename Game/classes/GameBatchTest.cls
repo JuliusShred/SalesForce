@@ -1,7 +1,7 @@
 @isTest
 public class GameBatchTest 
 {
-    @testSetup private static void setData() 
+    static testMethod void gameBatchTest()
     {
         //creating data
         Unit__c unit1 = new Unit__c(Name = 'Unit1', HP__c = 100, minDMG__c = 10, maxDMG__c = 20, Active__c = false, Deactivation_Time__c = DateTime.now().addDays(-1), Stamina__c = 0);
@@ -16,10 +16,7 @@ public class GameBatchTest
         unitDataList.add(unit4);
         unitDataList.add(unit5);
         insert unitDataList;
-    }
-    
-    static testMethod void gameBatchTest()
-    {
+        
         //starting our test
         Test.startTest();
         Database.executeBatch(new gameBatch());

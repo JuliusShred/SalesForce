@@ -5,7 +5,7 @@
 public class GameTest 
 {
     //creating data
-    @testSetup private static void setData() 
+    private static testMethod  void setData() 
     {
         Unit__c firstUnit = new Unit__c(Name = 'first', 
                                         HP__c = 200, 
@@ -25,6 +25,7 @@ public class GameTest
     //testing the values that getBlockKickType() method have to return
     static testMethod void getBlockKickTypeTest()
     {
+        GameTest.setData();
         Game g = new Game();
         
         String  HeadType =  g.getBlockKickType(0);
@@ -40,6 +41,7 @@ public class GameTest
     //spentStaminaPoints values testing for spentStaminaPoints() method
     static testMethod void spentStaminaPointsTest()
     {
+        GameTest.setData();
         Game g = new Game();
         
         List <Decimal> spentStaminaPointsValuesList = new List <Decimal>();
@@ -62,6 +64,7 @@ public class GameTest
     //damage values testing for generateDamage() method
     static testMethod void generateDamageTest()
     {
+        GameTest.setData();
         Unit__c firstUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c FROM Unit__c][0];
         Unit__c secondUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c FROM Unit__c][1];
         Game g = new Game();
@@ -96,6 +99,7 @@ public class GameTest
     //damage values testing for hit() method
     static testMethod void hitTest()
     {
+        GameTest.setData();
         Unit__c firstUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c FROM Unit__c][0];
         Unit__c secondUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c FROM Unit__c][1];
         Game g = new Game();
@@ -128,6 +132,7 @@ public class GameTest
     //testing winner results for fight() method
     static testMethod void fightTest()
     {
+        GameTest.setData();
         Unit__c firstUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c FROM Unit__c][0];
         Unit__c secondUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c FROM Unit__c][1];
         Game g = new Game();
@@ -149,6 +154,7 @@ public class GameTest
     //testing winner results for fight() method sending NULL as one of the parameters
     static testMethod void fightWithNULLUnitTest()
     {
+        GameTest.setData();
         Unit__c firstUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c FROM Unit__c][0];
         Game g = new Game();  
         Unit__c winner = new Unit__c();

@@ -5,7 +5,7 @@
 public class GameControllerTest
 {
     //creating data
-    @testSetup private static void setData() 
+    private static testMethod void setData() 
     {
         Unit__c firstUnit = new Unit__c(Name = 'first',
                                         HP__c = 200,
@@ -53,6 +53,7 @@ public class GameControllerTest
     */
     static testMethod void gameInitializationTest() 
     {
+        GameControllerTest.setData();
         List <Unit__c> activeUnits  = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Active__c
                                         FROM Unit__c
                                         WHERE Active__c = true];
@@ -79,6 +80,7 @@ public class GameControllerTest
     //testing the activation of all units
     static testMethod void activateAllUnitsTest() 
     {
+        GameControllerTest.setData();
         Test.startTest();
             GameController gameCtrl = new GameController();
             gameCtrl.activateAllUnits();
@@ -89,6 +91,7 @@ public class GameControllerTest
     //testing the method that get data from active units and sets in into options of page's menu 
     static testMethod void getUnitSelectListTest() 
     {
+        GameControllerTest.setData();
         GameController gameCtrl = new GameController();
         gameCtrl.gameInitialization();
         List<SelectOption> options = gameCtrl.getUnitSelectList();
@@ -105,6 +108,7 @@ public class GameControllerTest
     //testing the choosing of menu's options
     static testMethod void chooseUnitTest() 
     {
+        GameControllerTest.setData();
         List<Unit__c> activeUnits = [SELECT ID, Name 
                                      FROM Unit__c
                                      WHERE Active__c = true];
@@ -126,6 +130,7 @@ public class GameControllerTest
     //testing the fight sending the NULL values as parameters
     static testMethod void fightWithNULLUnitTest() 
     {
+        GameControllerTest.setData();
         Unit__c firstUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Stamina__c, Number_of_Victories__c, Number_of_Games__c FROM Unit__c][0];
         
         Test.startTest();
@@ -142,6 +147,7 @@ public class GameControllerTest
     //testing the fight
     static testMethod void fightTest()
     {
+        GameControllerTest.setData();
         Unit__c firstUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Stamina__c, Number_of_Victories__c, Number_of_Games__c FROM Unit__c][0];
         Unit__c secondUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Deactivation_Time__c, Stamina__c, Number_of_Victories__c, Number_of_Games__c FROM Unit__c][1];
         firstUnit.HP__c = 9999;
@@ -161,6 +167,7 @@ public class GameControllerTest
     //testing the deactivation of units
     static testMethod void deactivateUnitsTest() 
     {
+        GameControllerTest.setData();
         Unit__c firstUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Deactivation_Time__c, Active__c FROM Unit__c][0];
         Unit__c secondUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Stamina__c, Deactivation_Time__c, Active__c FROM Unit__c][1];
         firstUnit.Stamina__c = 0;
@@ -180,6 +187,7 @@ public class GameControllerTest
     // testing the saving ofgameresults  
     static testMethod void saveGameResultTest() 
     {
+        GameControllerTest.setData();
         Unit__c firstUnit = [SELECT Id, Name, Number_of_Victories__c, Number_of_Games__c FROM Unit__c][0];
         Unit__c secondUnit = [SELECT Id, Name, Number_of_Victories__c, Number_of_Games__c FROM Unit__c][1];
 
@@ -207,6 +215,7 @@ public class GameControllerTest
     */  
     static testMethod void editUnitTest() 
     {
+        GameControllerTest.setData();
         PageReference pageRef = Page.updateContactPage;
         Unit__c testUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Stamina__c FROM Unit__c][0];
         pageRef.getParameters().put('unitID', testUnit.Id);
@@ -226,6 +235,7 @@ public class GameControllerTest
     
     static testMethod void deleteUnitTest() 
     {
+        GameControllerTest.setData();
         PageReference pageRef = Page.updateContactPage;
         Unit__c testUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Stamina__c FROM Unit__c][0];
         pageRef.getParameters().put('unitID', testUnit.Id);
@@ -255,6 +265,7 @@ public class GameControllerTest
     
     static testMethod void save_updateUnitWithWrongValuesTest() 
     {
+        GameControllerTest.setData();
         Test.startTest();
             GameController gameCtrl = new GameController();
             gameCtrl.createEditUnit();
@@ -268,6 +279,7 @@ public class GameControllerTest
     
     static testMethod void save_updateUnitWithWrongDamageValuesTest() 
     {
+        GameControllerTest.setData();
         Unit__c testUnit = [SELECT Id, Name, HP__c, minDMG__c, maxDMG__c, Active__c, Stamina__c FROM Unit__c][0];
         testUnit.minDMG__c = 15;
         
@@ -285,6 +297,7 @@ public class GameControllerTest
     
     static testMethod void save_updateUnitTest() 
     {
+        GameControllerTest.setData();
         Unit__c testUnitToSave = new Unit__c(Name = 'testUnitToSave',
                                              HP__c = 200,
                                              minDMG__c = 10,
@@ -311,6 +324,7 @@ public class GameControllerTest
     
     static testMethod void closeCreationEditingTest() 
     {
+        GameControllerTest.setData();
         Test.startTest();
             GameController gameCtrl = new GameController();
             gameCtrl.createEditUnit();

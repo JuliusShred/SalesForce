@@ -1,7 +1,7 @@
 @isTest
-public class RatingTriggerTest {
-
-    @isTest static void RatingTriggerTest ()
+public class RatingTriggerTest 
+{
+    private static testMethod void RatingTriggerTest ()
     {
         //creating data
         Unit__c unit1 = new Unit__c(Name = 'Unit1', HP__c = 100, minDMG__c = 5, maxDMG__c = 10, Number_of_Victories__c = 0);
