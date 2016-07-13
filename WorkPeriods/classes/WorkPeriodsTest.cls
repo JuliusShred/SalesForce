@@ -4,7 +4,7 @@
 @isTest
 public class WorkPeriodsTest 
 {
-	//creating data
+    //creating data
     private static testMethod void setData()
     {
         List<Account> companies = new List<Account>();
