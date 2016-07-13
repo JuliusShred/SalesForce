@@ -19,20 +19,20 @@ public class AccountCheckerTest
         companies.add(lg);
         insert companies;
     }
-	//testing the work of controller if none of accounts were selected
-	static testMethod void noAccountsSelectedTest() 
+    //testing the work of controller if none of accounts were selected
+    static testMethod void noAccountsSelectedTest() 
     {
         AccountCheckerTest.setData();
         List<Account> accountsList = [SELECT Id, Name, Phone, Description 
                                       FROM Account];
         
-		Test.startTest();
+        Test.startTest();
         	AccountCheckerController accCheckerCtrl = new AccountCheckerController();
         	accCheckerCtrl.getCheckedRecords();
         Test.stopTest();
 
         system.assertEquals(accountsList.size(), accCheckerCtrl.accountsList.size(), 'Error: test and controller accountsList lists don\'t match');       
-		system.assertEquals(0, accCheckerCtrl.checkedAccs.size(), 'Error: List size must be 0.'); 
+        system.assertEquals(0, accCheckerCtrl.checkedAccs.size(), 'Error: List size must be 0.'); 
     }
     //testing the work of controller with one account selected
     static testMethod void oneAccountSelectedTest() 
@@ -41,14 +41,14 @@ public class AccountCheckerTest
         List<Account> accountsList = [SELECT Id, Name, Phone, Description 
                                       FROM Account];
         
-		Test.startTest();
+        Test.startTest();
         	AccountCheckerController accCheckerCtrl = new AccountCheckerController();
         	accCheckerCtrl.accountsList[0].isSelected = true;
         	accCheckerCtrl.getCheckedRecords();
         Test.stopTest();
 
         system.assertEquals(accountsList.size(), accCheckerCtrl.accountsList.size(), 'Error: test and controller accountsList lists don\'t match');       
-		system.assertEquals(1, accCheckerCtrl.checkedAccs.size(), 'Error: List size must be 1.'); 
+        system.assertEquals(1, accCheckerCtrl.checkedAccs.size(), 'Error: List size must be 1.'); 
     }
     //testing the work of controller with all accounts selected
     static testMethod void allAccountsSelectedTest() 
@@ -57,7 +57,7 @@ public class AccountCheckerTest
         List<Account> accountsList = [SELECT Id, Name, Phone, Description 
                                       FROM Account];
         
-		Test.startTest();
+        Test.startTest();
         	AccountCheckerController accCheckerCtrl = new AccountCheckerController();
         	for (Integer i = 0; i < accCheckerCtrl.accountsList.size(); i++)
             {
@@ -67,6 +67,6 @@ public class AccountCheckerTest
         Test.stopTest();
 
         system.assertEquals(accountsList.size(), accCheckerCtrl.accountsList.size(), 'Error: test and controller accountsList lists don\'t match');       
-		system.assertEquals(accountsList.size(), accCheckerCtrl.checkedAccs.size(), 'Error: accountsList and checkedAccs lists don\'t match'); 
+        system.assertEquals(accountsList.size(), accCheckerCtrl.checkedAccs.size(), 'Error: accountsList and checkedAccs lists don\'t match'); 
     }
 }
