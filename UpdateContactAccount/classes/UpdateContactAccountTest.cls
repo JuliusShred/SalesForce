@@ -28,7 +28,7 @@ public class UpdateContactAccountTest
 		System.assertEquals(TRUE, ApexPages.getMessages().get(0).getDetail().contains('Account Id was not given.'), 'Apex Message was not added.');
 		System.assertEquals(NULL, controller.updateContactAccount, 'Account Record should be NULL');
 	}
-	
+
 	static testMethod void openPageWithWrongId()
 	{
 		UpdateContactAccountTest.setData();
@@ -91,7 +91,7 @@ public class UpdateContactAccountTest
 	{
 		UpdateContactAccountTest.setData();
 		Account testAccount = [SELECT Id, Name, (SELECT FirstName, LastName, Phone FROM Contacts) 
-								FROM Account][0];
+			FROM Account][0];
 
 		PageReference pageRef = Page.UpdateContactAccount;								
 		pageRef.getParameters().put('Id',testAccount.Id);
@@ -111,9 +111,9 @@ public class UpdateContactAccountTest
     
     static testMethod void saveRecordTest()
     {
-        UpdateContactAccountTest.setData();
+    	UpdateContactAccountTest.setData();
 		Account testAccount = [SELECT Id, Name, (SELECT FirstName, LastName, Phone FROM Contacts) 
-						FROM Account][0];
+			FROM Account][0];
 								
 		PageReference pageRef = Page.UpdateContactAccount;								
 		pageRef.getParameters().put('Id',testAccount.Id);
@@ -133,12 +133,12 @@ public class UpdateContactAccountTest
 		System.assertEquals('Johnson', upCnt.updateContactAccount.Contacts[0].LastName, 'Contact LastName does not match.');
 		System.assertEquals('000', upCnt.updateContactAccount.Contacts[0].Phone, 'Contact Phone does not match.');
 	}
-	//having troubles testing that
+//having troubles testing that
     static testMethod void revertChangesTest()
     {
-        UpdateContactAccountTest.setData();
+    	UpdateContactAccountTest.setData();
 		Account testAccount = [SELECT Id, Name, (SELECT FirstName, LastName, Phone FROM Contacts) 
-						FROM Account][0];
+			FROM Account][0];
 								
 		PageReference pageRef = Page.UpdateContactAccount;								
 		pageRef.getParameters().put('Id',testAccount.Id);
