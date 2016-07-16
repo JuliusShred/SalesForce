@@ -28,6 +28,7 @@ public class UpdateContactAccountTest
 		System.assertEquals(TRUE, ApexPages.getMessages().get(0).getDetail().contains('Account Id was not given.'), 'Apex Message was not added.');
 		System.assertEquals(NULL, controller.updateContactAccount, 'Account Record should be NULL');
 	}
+	
 	static testMethod void openPageWithWrongId()
 	{
 		UpdateContactAccountTest.setData();
@@ -112,7 +113,7 @@ public class UpdateContactAccountTest
     {
         UpdateContactAccountTest.setData();
 		Account testAccount = [SELECT Id, Name, (SELECT FirstName, LastName, Phone FROM Contacts) 
-								FROM Account][0];
+						FROM Account][0];
 								
 		PageReference pageRef = Page.UpdateContactAccount;								
 		pageRef.getParameters().put('Id',testAccount.Id);
@@ -137,7 +138,7 @@ public class UpdateContactAccountTest
     {
         UpdateContactAccountTest.setData();
 		Account testAccount = [SELECT Id, Name, (SELECT FirstName, LastName, Phone FROM Contacts) 
-								FROM Account][0];
+						FROM Account][0];
 								
 		PageReference pageRef = Page.UpdateContactAccount;								
 		pageRef.getParameters().put('Id',testAccount.Id);
