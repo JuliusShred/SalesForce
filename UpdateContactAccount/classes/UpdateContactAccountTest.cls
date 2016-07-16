@@ -91,7 +91,7 @@ public class UpdateContactAccountTest
 	{
 		UpdateContactAccountTest.setData();
 		Account testAccount = [SELECT Id, Name, (SELECT FirstName, LastName, Phone FROM Contacts) 
-			FROM Account][0];
+					FROM Account][0];
 
 		PageReference pageRef = Page.UpdateContactAccount;								
 		pageRef.getParameters().put('Id',testAccount.Id);
@@ -109,11 +109,11 @@ public class UpdateContactAccountTest
 		System.assertEquals(ApexPages.getMessages().size(), 0, 'Apex Message should not be added.');
 	}
     
-    static testMethod void saveRecordTest()
-    {
-    	UpdateContactAccountTest.setData();
+	static testMethod void saveRecordTest()
+	{
+		UpdateContactAccountTest.setData();
 		Account testAccount = [SELECT Id, Name, (SELECT FirstName, LastName, Phone FROM Contacts) 
-			FROM Account][0];
+					FROM Account][0];
 								
 		PageReference pageRef = Page.UpdateContactAccount;								
 		pageRef.getParameters().put('Id',testAccount.Id);
@@ -133,12 +133,12 @@ public class UpdateContactAccountTest
 		System.assertEquals('Johnson', upCnt.updateContactAccount.Contacts[0].LastName, 'Contact LastName does not match.');
 		System.assertEquals('000', upCnt.updateContactAccount.Contacts[0].Phone, 'Contact Phone does not match.');
 	}
-//having troubles testing that
-    static testMethod void revertChangesTest()
-    {
-    	UpdateContactAccountTest.setData();
+	//having troubles testing that
+	static testMethod void revertChangesTest()
+	{
+		UpdateContactAccountTest.setData();
 		Account testAccount = [SELECT Id, Name, (SELECT FirstName, LastName, Phone FROM Contacts) 
-			FROM Account][0];
+					FROM Account][0];
 								
 		PageReference pageRef = Page.UpdateContactAccount;								
 		pageRef.getParameters().put('Id',testAccount.Id);
